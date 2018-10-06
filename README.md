@@ -1,14 +1,8 @@
 # snapchat
 > Unofficial SnapChat API
 
-### SnapChat(username)
 
-```python
->>> from snapchat import SnapChat
->>> myFriend = SnapChat("mannbilly")
-```
-
-### snapcode(bitmoji=False, size=None)
+SnapChat.**snapcode(bitmoji=False, size=None)**
 ```python
 >>> from snapchat import SnapChat
 >>> 
