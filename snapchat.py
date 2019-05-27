@@ -10,6 +10,8 @@ class SnapChat:
 
 
     def check_username(self):
+
+        # This header is specific for checking the username
         headers = {
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:66.0) Gecko/20100101 Firefox/66.0",
             "Accept": "*/*",
@@ -23,6 +25,7 @@ class SnapChat:
         check_username_url= "https://accounts.snapchat.com/accounts/get_username_suggestions?requested_username={}&xsrf_token=PlEcin8s5H600toD4Swngg"
 
         r = requests.post(check_username_url.format(self.username), headers=headers)
+        
         data = r.json()
 
         status = data.get("reference").get("status_code")
@@ -37,8 +40,50 @@ class SnapChat:
 
             return error_message
 
-        return "username available"
+        return "Username available"
 
+    
+    def get_snapcode(self, bitmoji=False, size=None):
+
+        url = "https://app.snapchat.com/web/deeplink/snapcode?username={}&type={}"
+        
+        if bitmoji == False:
+            filetype = "PNG"
+            snapcode_url = url.format(self.username, filetype)
+
+            if size:
+                if int(size) > 1000:
+                    raise ValueError("size can not exceed 1000")
+                
+                url_with_size = url+"&size={}"
+                snapcode_url = url_with_size.format(self.username, filetype, size)
+                
+                size = str(size)+"x"+str(size)
+
+                r = requests.get(snapcode_url)
+                snapcode = r.content
+
+                return snapcode, filetype, size
+            
+            return snapcode, filetype
+
+        else:
+            # NOTICE: You cant resize the SVG because there is 
+            #         no need to do that.
+
+            # If filetype is SVG, you will get the 
+            # SnapCode with the bitmoji
+            filetype = "SVG"
+
+            # Putting all the information into the url
+            snapcode_url = url.format(self.username, filetype)
+
+            r = requests.get(snapcode_url)
+
+            # The SnapCode as raw
+            snapcode = r.content
+
+            return snapcode, filetype
 
 
 
