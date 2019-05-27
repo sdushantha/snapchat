@@ -86,5 +86,3 @@ class SnapChat:
             return snapcode, filetype
 
 
-
-
