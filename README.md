@@ -1,6 +1,5 @@
 # snapchat
-> Unofficial SnapChat API (WIP)
-
+> Unofficial SnapChat API (work in progress)
 ## Example useage
 ```python
 >>> from snapchat import *
